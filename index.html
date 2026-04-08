@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>트레이딩노트 | Trading Note</title>
+    <meta name="description" content="트레이딩노트 - 시스템 트레이더의 매매전략, 무료 인디케이터, OKX 수수료 페이백">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --bg2: #12121a;
+            --mint: #00e6a7;
+            --mint-dim: rgba(0, 230, 167, 0.12);
+            --mint-glow: rgba(0, 230, 167, 0.25);
+            --red: #ff4757;
+            --red-dim: rgba(255, 71, 87, 0.12);
+            --gold: #ffd32a;
+            --gold-dim: rgba(255, 211, 42, 0.12);
+            --blue: #3b82f6;
+            --blue-dim: rgba(59, 130, 246, 0.12);
+            --purple: #a855f7;
+            --purple-dim: rgba(168, 85, 247, 0.12);
+            --text: #e8e8f0;
+            --text-dim: #8888a0;
+            --card: #16162a;
+            --border: #2a2a40;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            padding: 0 20px;
+        }
+
+        /* ── PROFILE ── */
+        .profile {
+            text-align: center;
+            padding: 50px 0 30px;
+            position: relative;
+        }
+        .profile::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 250px; height: 250px;
+            background: radial-gradient(circle, var(--mint-glow) 0%, transparent 70%);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--mint), #00c48c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 32px;
+            font-weight: 900;
+            color: #000;
+            position: relative;
+        }
+        .avatar::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            border: 2px solid var(--mint);
+            opacity: 0.4;
+        }
+        .profile h1 {
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+        .profile .handle {
+            font-size: 14px;
+            color: var(--mint);
+            margin-bottom: 10px;
+        }
+        .profile .bio {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        /* ── SOCIAL ICONS ── */
+        .social-row {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        .social-icon:hover {
+            border-color: var(--mint);
+            background: var(--mint-dim);
+        }
+
+        /* ── LINKS ── */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-bottom: 40px;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px 18px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+        .link-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--mint);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .link-card:active {
+            transform: scale(0.98);
+        }
+
+        .link-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .link-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .link-info h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        .link-info p {
+            font-size: 12px;
+            color: var(--text-dim);
+            line-height: 1.4;
+        }
+
+        .link-arrow {
+            color: var(--text-dim);
+            font-size: 14px;
+            flex-shrink: 0;
+            transition: transform 0.2s;
+        }
+        .link-card:hover .link-arrow {
+            transform: translateX(3px);
+            color: var(--mint);
+        }
+
+        /* ── FEATURED (OKX) ── */
+        .link-card.featured {
+            border-color: var(--mint);
+            background: linear-gradient(135deg, var(--card) 0%, rgba(0, 230, 167, 0.05) 100%);
+        }
+        .link-card.featured::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--mint), var(--gold), var(--mint));
+        }
+        .link-card.featured .link-badge {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: var(--mint);
+            color: #000;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        /* ── SECTION LABEL ── */
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            padding-left: 4px;
+            margin-top: 8px;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 11px;
+            color: #555;
+        }
+
+        /* ── COLOR VARIANTS ── */
+        .icon-mint { background: var(--mint-dim); }
+        .icon-red { background: var(--red-dim); }
+        .icon-gold { background: var(--gold-dim); }
+        .icon-blue { background: var(--blue-dim); }
+        .icon-purple { background: var(--purple-dim); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ═══════ PROFILE ═══════ -->
+    <div class="profile">
+        <div class="avatar">TN</div>
+        <h1>트레이딩노트</h1>
+        <div class="handle">@tradingnote</div>
+        <p class="bio">
+            시스템 트레이더 · EA 개발자<br>
+            매매전략 · 무료 인디케이터 · 시장 분석
+        </p>
+        <div class="social-row">
+            <a href="https://www.youtube.com/@tradingnote_kr" target="_blank" class="social-icon" title="YouTube">🎬</a>
+            <a href="https://t.me/+HXLVYQq_NzoxZTdl" target="_blank" class="social-icon" title="Telegram">💬</a>
+        </div>
+    </div>
+
+    <!-- ═══════ LINKS ═══════ -->
+    <div class="section-label">📊 트레이딩노트</div>
+    <div class="links">
+
+        <a href="./indicator/" class="link-card featured">
+            <div class="link-badge">무료</div>
+            <div class="link-icon icon-blue">📈</div>
+            <div class="link-info">
+                <h3>무료 인디케이터 받기</h3>
+                <p>TradingView SMC BOS/CHoCH + FVG 인디케이터</p>
+            </div>
+            <span class="link-arrow">→</span>
+        </a>
+
+        <a href="https://t.me/tdnote" target="_blank" class="link-card">
+            <div class="link-icon icon-mint">💬</div>
+            <div class="link-info">
+                <h3>1:1 개인 메시지</h3>
+                <p>인디케이터 신청 · 질문 · 매매 아이디어 공유</p>
+            </div>
+            <span class="link-arrow">→</span>
+        </a>
+
+        <a href="https://t.me/+HXLVYQq_NzoxZTdl" target="_blank" class="link-card">
+            <div class="link-icon icon-purple">👥</div>
+            <div class="link-info">
+                <h3>정보공유방 입장</h3>
+                <p>트레이딩노트 텔레그램 그룹</p>
+            </div>
+            <span class="link-arrow">→</span>
+        </a>
+
+        <a href="https://www.youtube.com/@tradingnote_kr" target="_blank" class="link-card">
+            <div class="link-icon icon-red">🎬</div>
+            <div class="link-info">
+                <h3>유튜브 채널</h3>
+                <p>매매전략 · 무료 교육 · 실시간 매매</p>
+            </div>
+            <span class="link-arrow">→</span>
+        </a>
+
+    </div>
+
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<div class="footer">
+    © 2026 트레이딩노트 · Trading Note
+</div>
+
+</body>
+</html>

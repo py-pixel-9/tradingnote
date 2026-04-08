@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>무료 인디케이터 | 트레이딩노트</title>
+    <meta name="description" content="트레이딩노트 무료 SMC 인디케이터 - BOS/CHoCH, FVG, 페이크아웃 감지. TradingView 초대 전용 스크립트.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --bg2: #12121a;
+            --mint: #00e6a7;
+            --mint-dim: rgba(0, 230, 167, 0.12);
+            --mint-glow: rgba(0, 230, 167, 0.25);
+            --red: #ff4757;
+            --gold: #ffd32a;
+            --blue: #3b82f6;
+            --purple: #a855f7;
+            --text: #e8e8f0;
+            --text-dim: #8888a0;
+            --card: #16162a;
+            --border: #2a2a40;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            text-align: center;
+            padding: 50px 0 40px;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, var(--mint-glow) 0%, transparent 70%);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: var(--mint-dim);
+            border: 1px solid rgba(0,230,167,0.3);
+            color: var(--mint);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+        .hero h1 {
+            font-size: 28px;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+        .hero h1 span {
+            color: var(--mint);
+        }
+        .hero p {
+            font-size: 15px;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        /* ── SECTION ── */
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            padding-left: 4px;
+        }
+
+        /* ── INDICATOR CARD ── */
+        .indicator-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 40px;
+        }
+        .indicator-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+        }
+        .indicator-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .indicator-card h3 .tag {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 8px;
+            background: var(--mint-dim);
+            color: var(--mint);
+        }
+        .indicator-card p {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        .feature-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .feature-tag {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.05);
+            color: var(--text-dim);
+            border: 1px solid var(--border);
+        }
+
+        /* ── STEPS ── */
+        .steps {
+            margin-bottom: 40px;
+        }
+        .step {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            position: relative;
+        }
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 19px;
+            top: 52px;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--mint-dim);
+            border: 2px solid var(--mint);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 900;
+            color: var(--mint);
+            flex-shrink: 0;
+        }
+        .step-content {
+            flex: 1;
+        }
+        .step-content h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .step-content p {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+        .step-content .note {
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--gold);
+            background: rgba(255,211,42,0.08);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--gold);
+        }
+
+        /* ── EXAMPLE IMAGES (CSS mockups) ── */
+        .example-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 12px;
+        }
+        .example-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--mint);
+            margin-bottom: 6px;
+        }
+
+        /* YouTube mockup */
+        .yt-mockup {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            color: #000;
+        }
+        .yt-header {
+            background: #ff0000;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .yt-body {
+            padding: 14px;
+        }
+        .yt-channel {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .yt-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00e6a7, #00c48c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 900;
+            color: #000;
+        }
+        .yt-channel-info {
+            flex: 1;
+        }
+        .yt-channel-name {
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .yt-subs {
+            font-size: 11px;
+            color: #888;
+        }
+        .yt-sub-btn {
+            background: #000;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        .yt-check {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: var(--mint);
+            color: #000;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 900;
+        }
+        .yt-comment {
+            background: #f2f2f2;
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+        .yt-comment-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .yt-comment-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+        .yt-comment-name {
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .yt-comment-text {
+            font-size: 12px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        /* Telegram mockup */
+        .tg-mockup {
+            background: #0e1621;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #1e2d3d;
+        }
+        .tg-header {
+            background: #17212b;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #1e2d3d;
+        }
+        .tg-header-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00e6a7, #00c48c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 900;
+            color: #000;
+        }
+        .tg-header-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .tg-header-status {
+            font-size: 11px;
+            color: #6b7d8e;
+        }
+        .tg-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .tg-msg {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .tg-msg.sent {
+            align-self: flex-end;
+            background: #2b5278;
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+        .tg-msg.received {
+            align-self: flex-start;
+            background: #182533;
+            color: #fff;
+            border-bottom-left-radius: 4px;
+        }
+        .tg-msg .time {
+            font-size: 10px;
+            color: #6b7d8e;
+            text-align: right;
+            margin-top: 4px;
+        }
+        .tg-img-placeholder {
+            align-self: flex-end;
+            display: flex;
+            gap: 6px;
+        }
+        .tg-img-box {
+            width: 100px;
+            height: 70px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #8899a6;
+            text-align: center;
+            line-height: 1.3;
+            padding: 6px;
+        }
+        .tg-img-box.sub {
+            background: linear-gradient(135deg, #1a1a2e, #2d1b4e);
+            border: 1px solid #3d2b5e;
+        }
+        .tg-img-box.comment {
+            background: linear-gradient(135deg, #1a2a1e, #1b4e2d);
+            border: 1px solid #2b5e3d;
+        }
+
+        /* ── TradingView mockup ── */
+        .tv-mockup {
+            background: #1e222d;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #2a2e39;
+        }
+        .tv-header {
+            background: #2a2e39;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .tv-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #d1d4dc;
+        }
+        .tv-search {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #363a45;
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+        .tv-search-icon { font-size: 12px; }
+        .tv-search-text { font-size: 12px; color: #6b7280; }
+        .tv-tabs {
+            display: flex;
+            border-bottom: 1px solid #2a2e39;
+            overflow-x: auto;
+        }
+        .tv-tab {
+            padding: 10px 14px;
+            font-size: 12px;
+            color: #6b7280;
+            white-space: nowrap;
+            cursor: default;
+            border-bottom: 2px solid transparent;
+        }
+        .tv-tab.active {
+            color: #2962ff;
+            border-bottom-color: #2962ff;
+            font-weight: 700;
+        }
+        .tv-list {
+            padding: 8px;
+        }
+        .tv-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            transition: background 0.15s;
+        }
+        .tv-item.highlight {
+            background: rgba(0, 230, 167, 0.08);
+            border: 1px solid rgba(0, 230, 167, 0.25);
+        }
+        .tv-item-icon {
+            font-size: 20px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #2a2e39;
+            border-radius: 8px;
+        }
+        .tv-item-info { flex: 1; }
+        .tv-item-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #d1d4dc;
+        }
+        .tv-item-author {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+        .tv-item-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(41, 98, 255, 0.15);
+            color: #2962ff;
+        }
+        .tv-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px;
+            border-top: 1px solid #2a2e39;
+        }
+
+        /* ── CTA ── */
+        .cta-section {
+            text-align: center;
+            padding: 40px 0;
+            margin-bottom: 20px;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--mint), #00c48c);
+            color: #000;
+            font-size: 16px;
+            font-weight: 900;
+            padding: 16px 40px;
+            border-radius: 14px;
+            text-decoration: none;
+            transition: all 0.25s;
+            box-shadow: 0 4px 20px rgba(0, 230, 167, 0.3);
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(0, 230, 167, 0.4);
+        }
+        .cta-btn:active {
+            transform: scale(0.97);
+        }
+        .cta-sub {
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        /* ── FAQ ── */
+        .faq {
+            margin-bottom: 40px;
+        }
+        .faq-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 10px;
+        }
+        .faq-item h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--mint);
+        }
+        .faq-item p {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 11px;
+            color: #555;
+            border-top: 1px solid var(--border);
+        }
+        .footer a {
+            color: var(--mint);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ═══════ HERO ═══════ -->
+    <div class="hero">
+        <div class="hero-badge">100% 무료 &middot; 영구 제공</div>
+        <h1>트레이딩뷰 <span>무료 인디케이터</span></h1>
+        <p>
+            SMC 기반 BOS/CHoCH 감지, FVG 자동 표시.<br>
+            트레이딩뷰에서 바로 사용할 수 있는 초대 전용 스크립트입니다.
+        </p>
+    </div>
+
+    <!-- ═══════ INDICATOR ═══════ -->
+    <div class="section-title">📊 제공 인디케이터</div>
+    <div class="indicator-grid">
+
+        <div class="indicator-card">
+            <h3>
+                SMC BOS/CHoCH + FVG
+                <span class="tag">무료</span>
+            </h3>
+            <p>
+                스윙 하이/로우 기반으로 BOS(추세 지속)와 CHoCH(추세 전환)를 자동 감지합니다.
+                FVG(Fair Value Gap)도 함께 표시되어 진입 구간을 한눈에 파악할 수 있습니다.
+            </p>
+            <div class="feature-list">
+                <span class="feature-tag">BOS / CHoCH 자동 감지</span>
+                <span class="feature-tag">FVG 자동 표시</span>
+                <span class="feature-tag">페이크아웃(✗) 필터</span>
+                <span class="feature-tag">Dynamic FVG</span>
+                <span class="feature-tag">CE Line (50%)</span>
+                <span class="feature-tag">대시보드</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ═══════ HOW TO GET ═══════ -->
+    <div class="section-title">🔑 받는 방법 (3단계)</div>
+    <div class="steps">
+
+        <!-- STEP 1 -->
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h4>유튜브 구독 + 아무 영상에 댓글 1개</h4>
+                <p>트레이딩노트 유튜브 채널을 구독하고, 아무 영상에 댓글을 하나 남겨주세요.</p>
+
+                <div class="example-grid">
+                    <div>
+                        <div class="example-label">예시 1 — 구독 캡처</div>
+                        <div class="yt-mockup">
+                            <div class="yt-header">▶ YouTube</div>
+                            <div class="yt-body">
+                                <div class="yt-channel">
+                                    <div class="yt-avatar">TN</div>
+                                    <div class="yt-channel-info">
+                                        <div class="yt-channel-name">트레이딩노트</div>
+                                        <div class="yt-subs">@tradingnote</div>
+                                    </div>
+                                    <div class="yt-sub-btn" style="background:#888;color:#fff;">구독중 ✓</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="example-label">예시 2 — 댓글 캡처</div>
+                        <div class="yt-mockup">
+                            <div class="yt-header">▶ YouTube — 댓글</div>
+                            <div class="yt-body">
+                                <div class="yt-comment">
+                                    <div class="yt-comment-header">
+                                        <div class="yt-comment-avatar">😊</div>
+                                        <div class="yt-comment-name">내 닉네임</div>
+                                    </div>
+                                    <div class="yt-comment-text">인디케이터 신청합니다! 좋은 영상 감사합니다 👍</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h4>텔레그램 DM으로 캡처 2장 + 이메일 전송</h4>
+                <p>
+                    <a href="https://t.me/tdnote" style="color:var(--mint);text-decoration:none;font-weight:700;">@tdnote</a>에게
+                    개인 메시지(DM)로 아래 3가지를 보내주세요.
+                </p>
+                <div style="margin-top:8px;font-size:13px;color:var(--text);line-height:1.8;">
+                    ① 구독 캡처 이미지<br>
+                    ② 댓글 캡처 이미지<br>
+                    ③ TradingView 가입 이메일
+                </div>
+
+                <div class="example-grid" style="margin-top:16px;">
+                    <div class="example-label">예시 — 텔레그램 DM 화면</div>
+                    <div class="tg-mockup">
+                        <div class="tg-header">
+                            <div class="tg-header-avatar">TN</div>
+                            <div>
+                                <div class="tg-header-name">트레이딩노트</div>
+                                <div class="tg-header-status">@tdnote</div>
+                            </div>
+                        </div>
+                        <div class="tg-body">
+                            <div class="tg-msg sent">
+                                안녕하세요! 인디케이터 신청합니다 🙏
+                                <div class="time">오후 3:42</div>
+                            </div>
+                            <div class="tg-img-placeholder">
+                                <div class="tg-img-box sub">📸<br>구독<br>캡처</div>
+                                <div class="tg-img-box comment">📸<br>댓글<br>캡처</div>
+                            </div>
+                            <div class="tg-msg sent">
+                                TradingView 이메일: myemail@gmail.com
+                                <div class="time">오후 3:42</div>
+                            </div>
+                            <div class="tg-msg received">
+                                확인했습니다! 24시간 내 권한 부여해드리겠습니다 ✅
+                                <div class="time">오후 4:15</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="note" style="margin-top:12px;">
+                    ⚠️ TradingView 무료 계정도 사용 가능합니다
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h4>24시간 내 초대 승인</h4>
+                <p>확인 후 TradingView에서 초대 전용 스크립트 접근 권한을 드립니다.</p>
+
+                <div class="example-grid" style="margin-top:12px;">
+                    <div class="example-label">예시 — TradingView 인디케이터 추가 화면</div>
+                    <div class="tv-mockup">
+                        <div class="tv-header">
+                            <div class="tv-header-left">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                <span>인디케이터, 메트릭스 &amp; 전략</span>
+                            </div>
+                            <div class="tv-search">
+                                <span class="tv-search-icon">🔍</span>
+                                <span class="tv-search-text">검색</span>
+                            </div>
+                        </div>
+                        <div class="tv-tabs">
+                            <div class="tv-tab">즐겨찾기</div>
+                            <div class="tv-tab">개인</div>
+                            <div class="tv-tab active">초대 전용 스크립트</div>
+                            <div class="tv-tab">기술적 분석</div>
+                        </div>
+                        <div class="tv-list">
+                            <div class="tv-item highlight">
+                                <div class="tv-item-icon">📊</div>
+                                <div class="tv-item-info">
+                                    <div class="tv-item-name">SMC BOS/CHoCH + FVG</div>
+                                    <div class="tv-item-author">by 트레이딩노트</div>
+                                </div>
+                                <div class="tv-item-badge">초대 전용</div>
+                            </div>
+                        </div>
+                        <div class="tv-arrow">
+                            <span>👆</span>
+                            <span style="font-size:12px;color:var(--mint);font-weight:700;">여기에 표시됩니다!</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ═══════ CTA ═══════ -->
+    <div class="cta-section">
+        <a href="https://t.me/tdnote" target="_blank" class="cta-btn" id="telegram-cta">
+            💬 @tdnote에게 DM 보내기
+        </a>
+        <p class="cta-sub">구독 + 댓글 캡처 2장 + TradingView 이메일을 보내주세요</p>
+    </div>
+
+    <!-- ═══════ FAQ ═══════ -->
+    <div class="section-title">❓ 자주 묻는 질문</div>
+    <div class="faq">
+
+        <div class="faq-item">
+            <h4>정말 무료인가요?</h4>
+            <p>네, 영구 무료입니다. 유료 전환 계획도 없습니다. 대신 여러분의 매매 아이디어나 해외 커뮤니티 정보를 공유해주시면 큰 도움이 됩니다.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>TradingView 유료 구독이 필요한가요?</h4>
+            <p>아닙니다. 무료 계정에서도 초대 전용 스크립트를 사용할 수 있습니다.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>어떤 종목/타임프레임에서 쓸 수 있나요?</h4>
+            <p>모든 종목(주식, 암호화폐, 외환, 선물 등)과 모든 타임프레임에서 사용 가능합니다. 다만 M15 이상에서 가장 안정적인 신호가 나옵니다.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>왜 구독/댓글이 필요한가요?</h4>
+            <p>무료로 제공하는 대신 채널 성장에 도움을 받고 있습니다. 구독과 댓글 한 개면 충분합니다.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>이메일을 왜 보내야 하나요?</h4>
+            <p>TradingView 초대 전용 스크립트는 이메일로 권한을 부여하는 방식입니다. 이메일은 권한 부여 외 다른 용도로 사용하지 않습니다.</p>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<div class="footer">
+    &copy; 2026 트레이딩노트 &middot; <a href="https://www.youtube.com/@tradingnote_kr">YouTube</a>
+</div>
+
+</body>
+</html>
