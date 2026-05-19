@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinox 거래소 가입 안내 | 트레이딩노트</title>
+    <meta name="description" content="추세 추종 EA 운용 권장 거래소 - Infinox. 낮은 슬리피지, 한국어 지원, 추세장 거래에 최적화.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --bg2: #12121a;
+            --mint: #00e6a7;
+            --mint-dim: rgba(0, 230, 167, 0.12);
+            --mint-glow: rgba(0, 230, 167, 0.25);
+            --red: #ff4757;
+            --red-dim: rgba(255, 71, 87, 0.12);
+            --gold: #ffd32a;
+            --gold-dim: rgba(255, 211, 42, 0.12);
+            --gold-glow: rgba(255, 211, 42, 0.25);
+            --blue: #3b82f6;
+            --blue-dim: rgba(59, 130, 246, 0.12);
+            --text: #e8e8f0;
+            --text-dim: #8888a0;
+            --card: #16162a;
+            --border: #2a2a40;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 60px 0 30px;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: var(--gold-dim);
+            border: 1px solid rgba(255,211,42,0.3);
+            color: var(--gold);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .hero h1 span {
+            color: var(--gold);
+        }
+        .hero p {
+            font-size: 15px;
+            color: var(--text-dim);
+            line-height: 1.8;
+            position: relative;
+        }
+
+        /* COMING SOON BANNER */
+        .coming-banner {
+            background: var(--gold-dim);
+            border: 1px solid rgba(255,211,42,0.3);
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin: 20px 0 0;
+            text-align: center;
+        }
+        .coming-banner h3 {
+            font-size: 16px;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+        .coming-banner p {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* SECTION TITLE */
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            padding-left: 4px;
+            margin-top: 50px;
+        }
+
+        /* FEATURE GRID */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px 22px;
+        }
+        .feature-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--gold-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 14px;
+        }
+        .feature-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .feature-card p {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        /* HIGHLIGHT BOX */
+        .highlight-box {
+            background: var(--mint-dim);
+            border: 1px solid rgba(0,230,167,0.3);
+            border-radius: 14px;
+            padding: 24px;
+            margin: 20px 0 30px;
+        }
+        .highlight-box h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--mint);
+            margin-bottom: 8px;
+        }
+        .highlight-box p {
+            font-size: 14px;
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* STEPS */
+        .step-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 24px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+        .step-num {
+            min-width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+        .step-content h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .step-content p {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        /* CTA BUTTON */
+        .cta-section {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(180deg, var(--card) 0%, transparent 100%);
+            border-radius: 16px;
+            margin: 40px 0 20px;
+        }
+        .cta-section h2 {
+            font-size: 26px;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+        .cta-section h2 span {
+            color: var(--gold);
+        }
+        .cta-section p {
+            font-size: 14px;
+            color: var(--text-dim);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+        .cta-btn {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--bg);
+            text-decoration: none;
+            font-weight: 700;
+            padding: 18px 50px;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: opacity 0.2s, transform 0.2s;
+            margin-bottom: 12px;
+        }
+        .cta-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .cta-sub {
+            display: block;
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 12px;
+        }
+
+        /* WARNING */
+        .disclaimer {
+            background: var(--red-dim);
+            border: 1px solid rgba(255,71,87,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            font-size: 12px;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+        .disclaimer strong {
+            color: var(--red);
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 10px;
+        }
+        .faq-q {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+        .faq-a {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* COMPARISON TABLE */
+        .compare-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            margin: 20px 0 30px;
+        }
+        .compare-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+        .compare-row:last-child {
+            border-bottom: none;
+        }
+        .compare-row.header {
+            font-weight: 700;
+            color: var(--text-dim);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .compare-row strong.mint { color: var(--mint); }
+        .compare-row strong.gold { color: var(--gold); }
+
+        /* NEXT CARD */
+        .next-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            margin-top: 30px;
+        }
+        .next-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--gold);
+        }
+        .next-card p {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.8;
+        }
+        .next-link {
+            display: inline-block;
+            margin-top: 14px;
+            color: var(--mint);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 40px 0 60px;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+        .footer a {
+            color: var(--mint);
+            text-decoration: none;
+        }
+        .home-link {
+            display: inline-block;
+            margin-top: 16px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+        .home-link:hover {
+            color: var(--gold);
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 26px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .compare-row { font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+        <span class="hero-badge">추세 추종 EA 권장 거래소</span>
+        <h1><span>Infinox</span> 가입 안내</h1>
+        <p>
+            낮은 슬리피지와 한국어 지원이 우수한,<br>
+            추세 추종 매매에 최적화된 거래소입니다.<br>
+            <strong style="color:var(--gold);">추세 추종 EA는 추후 공개 예정입니다.</strong>
+        </p>
+    </section>
+
+    <!-- Coming Soon 배너 -->
+    <div class="coming-banner">
+        <h3>⏳ 추세 추종 EA — 추후 공개 예정</h3>
+        <p>
+            현재 추세 추종 EA는 검증 단계입니다.<br>
+            공개 시 별도 공지로 안내드리며, Infinox 환경에 최적화될 예정입니다.<br>
+            <strong>지금은 Xlence + 횡보 EA로 먼저 시작하시는 것을 권장합니다.</strong>
+        </p>
+    </div>
+
+    <!-- 특징 -->
+    <h2 class="section-title">▸ 왜 Infinox인가</h2>
+
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>낮은 슬리피지</h3>
+            <p>추세 매매 시 정확한 진입가 체결을 보장하는 안정적 거래 환경.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🇰🇷</div>
+            <h3>한국어 지원</h3>
+            <p>한국어 고객지원과 한국어 인터페이스 제공.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📈</div>
+            <h3>추세 매매 적합</h3>
+            <p>큰 무빙에서도 안정적 체결이 가능한 환경 — 추세 EA에 최적.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3>EA 호환</h3>
+            <p>MT4/MT5 모두 지원하며 자동매매 제약 없음.</p>
+        </div>
+    </div>
+
+    <!-- 강조 박스 -->
+    <div class="highlight-box">
+        <h3>📌 왜 추세 EA에 Infinox인가</h3>
+        <p>
+            추세 추종 EA는 큰 변동성 구간에서 진입/청산이 발생합니다.
+            슬리피지가 크면 진입가와 청산가가 크게 벌어져 수익이 줄어듭니다.
+            Infinox는 큰 무빙에서도 안정적 체결이 가능하여 추세 EA 운용에 최적의 환경입니다.
+        </p>
+    </div>
+
+    <!-- 비교 테이블 -->
+    <h2 class="section-title">▸ Xlence vs Infinox 차이</h2>
+
+    <div class="compare-card">
+        <div class="compare-row header">
+            <div>항목</div>
+            <div>Xlence</div>
+            <div>Infinox</div>
+        </div>
+        <div class="compare-row">
+            <div>적합 EA</div>
+            <div><strong class="mint">횡보 그리드</strong></div>
+            <div><strong class="gold">추세 추종</strong></div>
+        </div>
+        <div class="compare-row">
+            <div>강점</div>
+            <div>잦은 진입 안정성</div>
+            <div>큰 무빙 체결력</div>
+        </div>
+        <div class="compare-row">
+            <div>한국어 지원</div>
+            <div>✓</div>
+            <div>✓</div>
+        </div>
+        <div class="compare-row">
+            <div>슬리피지</div>
+            <div>낮음</div>
+            <div>낮음</div>
+        </div>
+        <div class="compare-row">
+            <div>현재 EA 제공</div>
+            <div><strong class="mint">활성 (베타)</strong></div>
+            <div>추후 예정</div>
+        </div>
+    </div>
+
+    <!-- 가입 절차 -->
+    <h2 class="section-title">▸ 가입 절차 (사전 준비용)</h2>
+
+    <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+            <h3>아래 가입 링크 클릭</h3>
+            <p>아래 CTA 버튼을 통해 Infinox 공식 페이지로 이동합니다.</p>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+            <h3>이메일/전화번호 인증 + KYC</h3>
+            <p>기본 정보 입력 후 신분증 인증을 완료합니다. 보통 24시간 안에 승인 완료됩니다.</p>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+            <h3>실계좌 개설 + MT4/MT5 다운로드</h3>
+            <p>실계좌를 개설하고 MT4 또는 MT5 트레이딩 플랫폼을 준비합니다.</p>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+            <h3>추세 EA 공개 대기</h3>
+            <p>추세 추종 EA 공개 공지가 올라오면, 트레이딩노트 채널 활동 + 캡처 4장 준비 후 텔레그램으로 신청해주세요.</p>
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <h2 class="section-title">▸ 자주 묻는 질문</h2>
+
+    <div class="faq-item">
+        <div class="faq-q">Q. 지금 Infinox에 가입해야 하나요?</div>
+        <div class="faq-a">
+            지금 당장 가입할 필요는 없습니다. 추세 EA가 공개되면 그때 가입하셔도 충분합니다.
+            현재는 횡보 EA + Xlence로 먼저 시작하시는 것을 권장합니다.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Q. 한 거래소에서 두 EA 모두 운용 가능한가요?</div>
+        <div class="faq-a">
+            기술적으로는 가능하지만, 각 EA는 거래소별 거래 환경에 최적화되어 있어
+            권장 거래소를 사용하실 때 가장 좋은 결과를 얻을 수 있습니다.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Q. 추세 EA는 언제 공개되나요?</div>
+        <div class="faq-a">
+            현재 검증 진행 중이며, 충분한 데이터가 축적된 후 별도 공지로 안내드립니다.
+            기존 베타 멤버에게 우선 제공됩니다.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-q">Q. Xlence + Infinox 둘 다 가입 가능한가요?</div>
+        <div class="faq-a">
+            네, 두 거래소 모두 가입 가능합니다. EA 종류별로 환경을 분리해서 운용하면
+            각 매매 방식의 장점을 최대화할 수 있습니다.
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2><span>Infinox</span> 가입하기</h2>
+        <p>
+            추세 EA 공개 전 미리 가입해두실 분들을 위한 페이지입니다.<br>
+            <strong style="color:var(--gold);">현재 EA는 Xlence에서 제공됩니다.</strong>
+        </p>
+        <a href="https://infinox.com" class="cta-btn" target="_blank" rel="noopener">
+            Infinox 가입 페이지로 →
+        </a>
+        <span class="cta-sub">
+            ※ 가입 링크는 추후 정식 IB 링크로 업데이트됩니다.
+        </span>
+    </section>
+
+    <!-- 다음 단계 -->
+    <div class="next-card">
+        <h3>📋 지금 바로 시작하려면</h3>
+        <p>
+            현재 베타 진행 중인 횡보 EA부터 시작하세요.<br>
+            1. Xlence 거래소 가입<br>
+            2. 트레이딩노트 채널 활동 (댓글/구독)<br>
+            3. 캡처 4장 → 텔레그램 DM @tdnote
+        </p>
+        <a href="../xlence/" class="next-link">Xlence 가입 페이지로 →</a>
+    </div>
+
+    <!-- 주의사항 -->
+    <div class="disclaimer">
+        <strong>⚠️ 투자 위험 고지</strong>
+        본 페이지는 EA 운용 권장 거래소 안내 목적이며, 투자 자문이 아닙니다.
+        모든 투자 결정과 결과는 본인 책임이며, 손실 가능성이 있습니다.
+        거래소 가입 및 입금 전 본인의 자금 사정과 위험 감수 능력을 충분히 검토하시기 바랍니다.
+    </div>
+
+    <!-- Footer -->
+    <a href="../" class="home-link">← EA 메인 페이지로</a>
+    <div class="footer">
+        © 트레이딩노트 · <a href="https://youtube.com/@tradingnote_kr" target="_blank">YouTube</a>
+    </div>
+
+</div>
+
+</body>
+</html>
