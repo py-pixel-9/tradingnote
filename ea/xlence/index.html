@@ -389,19 +389,50 @@
             margin-bottom: 18px;
             line-height: 1.6;
         }
-        .video-wrapper {
+        .video-thumb {
+            display: block;
             position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
             border-radius: 12px;
             overflow: hidden;
-            background: var(--bg);
+            text-decoration: none;
         }
-        .video-wrapper iframe {
+        .video-thumb img {
+            width: 100%;
+            display: block;
+            transition: opacity 0.2s;
+        }
+        .video-thumb:hover img {
+            opacity: 0.85;
+        }
+        .video-thumb .play-btn {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border: none;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 68px; height: 68px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .video-thumb:hover .play-btn {
+            background: var(--mint);
+            border-color: var(--mint);
+            transform: translate(-50%, -50%) scale(1.08);
+        }
+        .play-btn::after {
+            content: '';
+            display: block;
+            width: 0; height: 0;
+            border-style: solid;
+            border-width: 12px 0 12px 22px;
+            border-color: transparent transparent transparent #fff;
+            margin-left: 4px;
+        }
+        .video-thumb:hover .play-btn::after {
+            border-color: transparent transparent transparent var(--bg);
         }
 
         /* FAQ */
@@ -582,7 +613,7 @@
             <p>신분증 사진을 업로드합니다. 보통 24시간 내 승인됩니다.</p>
             <div class="info-box warn" style="margin-top:12px;">
                 <h4>KYC 승인 팁</h4>
-                <p>여권이 가장 빠르게 승인됩니다. 주민등록증/운전면허증도 가능합니다.</p>
+                <p>여권과 운전면허증이 가장 빠르게 승인됩니다. 추천드립니다.</p>
             </div>
         </div>
     </div>
@@ -593,8 +624,8 @@
             <h3>실계좌(Live Account) 개설</h3>
             <p>KYC 승인 후 실거래 계좌를 개설합니다.</p>
             <ul>
-                <li>계좌 유형: <strong style="color:var(--mint);">Standard</strong> 선택</li>
-                <li>레버리지: <strong style="color:var(--gold);">1:500</strong> 권장</li>
+                <li>계좌 유형: <strong style="color:var(--mint);">Essential</strong> 선택</li>
+                <li>레버리지: <strong style="color:var(--gold);">1:500~1:1000</strong> 권장</li>
                 <li>통화: <strong>USD</strong></li>
             </ul>
         </div>
@@ -613,17 +644,19 @@
     <div class="video-section">
         <h3>📹 계좌개설 및 입금방법</h3>
         <p class="video-desc">Xlence 가입부터 KYC 인증, 입금까지 전 과정을 보여드립니다</p>
-        <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/bH_3hU2ZSl0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+        <a href="https://youtu.be/bH_3hU2ZSl0" target="_blank" rel="noopener" class="video-thumb">
+            <img src="https://img.youtube.com/vi/bH_3hU2ZSl0/hqdefault.jpg" alt="계좌개설 및 입금방법 영상">
+            <div class="play-btn"></div>
+        </a>
     </div>
 
     <div class="video-section">
         <h3>📹 MT4 설정 및 EA 설치 · 인디케이터 활용</h3>
         <p class="video-desc">MT4 다운로드, EA 파일 설치, 세팅값 입력, 인디케이터 활용까지 한 번에</p>
-        <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/BNOIsIX7Kl8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+        <a href="https://youtu.be/BNOIsIX7Kl8" target="_blank" rel="noopener" class="video-thumb">
+            <img src="https://img.youtube.com/vi/BNOIsIX7Kl8/hqdefault.jpg" alt="MT4 설정 및 EA 설치 영상">
+            <div class="play-btn"></div>
+        </a>
     </div>
 
     <!-- ═══════ EA 수령 ═══════ -->
@@ -647,14 +680,10 @@
             </li>
             <li style="display:flex; align-items:center; gap:10px; padding:10px 0; font-size:14px; border-bottom:1px solid var(--border);">
                 <span style="color:var(--mint); font-weight:900;">02</span>
-                <strong>EA 설치 가이드</strong>
-            </li>
-            <li style="display:flex; align-items:center; gap:10px; padding:10px 0; font-size:14px; border-bottom:1px solid var(--border);">
-                <span style="color:var(--mint); font-weight:900;">03</span>
                 <strong>권장 셋업값</strong> (시드별 최적 설정)
             </li>
             <li style="display:flex; align-items:center; gap:10px; padding:10px 0; font-size:14px;">
-                <span style="color:var(--mint); font-weight:900;">04</span>
+                <span style="color:var(--mint); font-weight:900;">03</span>
                 <strong>리스크 관리 가이드</strong>
             </li>
         </ul>
