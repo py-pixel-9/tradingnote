@@ -1,0 +1,3 @@
+# NOTE license list
+# format: account_hash,expiry(YYYY-MM-DD)   # memo
+E57E473F6A26AD4C,2027-07-24   # acc 3670428
